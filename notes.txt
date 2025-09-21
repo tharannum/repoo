@@ -29,6 +29,7 @@ On Windows, use dir instead of ls:
 dir 
 Hidden files can be shown with:
 dir/a 
+ls -Force or dir -Force in powershell
 
  
 Git File States
@@ -147,4 +148,778 @@ Key points:
 
 Use after git commit to share changes with others
 You may need to enter your credentials
-If someone else pushed changes, you may need to pull first (git pull) before pushing again
+If someone else pushed changes, you may need to pull first (git pull) before pushing again.
+
+The mkdir command is used to create a new directory (folder) in your file system.
+
+Syntax: 
+mkdir <directory-name>
+
+Example:
+mkdir localrepo
+This creates a new folder named repoo in the current location.
+
+Note:
+You cannot use mkdir to create a file; it only creates directories. To create a file, use commands like touch filename.txt (on Linux/macOS) or type nul > filename.txt (on Windows).
+
+# Entire process step by step, starting from git init all the way until your file (like README.md) is uploaded (pushed) to GitHub. 
+
+## 🔹 Step 1: Initialize a Git repository
+
+Inside your project folder (example: `LocalRepo`), run:
+
+```bash
+git init
+```
+
+👉 This creates a hidden folder called **.git** inside your project. That’s where Git keeps all the history and versions of your files.
+Now your folder is a **Git repository**.
+
+---
+
+## 🔹 Step 2: Check the status
+
+```bash
+git status
+```
+
+👉 Shows if any files are untracked (not added to Git yet), modified, or staged.
+
+---
+
+## 🔹 Step 3: Stage your files (tell Git to track them)
+
+To add a specific file (example: `README.md`):
+
+```bash
+git add README.md
+```
+
+To add all files in the folder:
+
+```bash
+git add .
+```
+
+👉 Now the files are in the **staging area** (ready to be committed).
+
+---
+
+## 🔹 Step 4: Commit your files (save a version)
+
+```bash
+git commit -m "First commit"
+```
+
+👉 This saves a snapshot of your project in Git’s history with a message (so you know what you changed).
+
+---
+
+## 🔹 Step 5: Connect to GitHub
+
+1. Go to **GitHub** → create a new repository (don’t add README, license, or .gitignore if you already have one locally).
+2. Copy the remote URL (HTTPS or SSH). Example:
+
+   ```
+   https://github.com/username/repo-name.git
+   ```
+
+Now in your terminal, connect your local repo with GitHub:
+
+```bash
+git remote add origin https://github.com/username/repo-name.git
+```
+
+---
+
+## 🔹 Step 6: Push your code to GitHub
+
+```bash
+git branch -M main
+git push -u origin main
+```
+
+👉 This uploads all your commits to the `main` branch of your GitHub repository.
+
+---
+
+## ✅ Summary (Full Command Flow)
+
+```bash
+git init
+git add .
+git commit -m "First commit"
+git branch -M main
+git remote add origin https://github.com/username/repo-name.git
+git push -u origin main
+```
+
+After this, your code will be live on GitHub 🎉
+
+
+### 🔹 `git remote add origin <link>`
+
+* This connects your **local Git repository** to a **remote GitHub repository**.
+* `origin` is just a nickname (the default name) for the remote repository.
+* `<link>` is your GitHub repo URL (example: `https://github.com/username/repo-name.git`).
+  👉 After this, your local project knows **where to push your code**.
+
+---
+
+### 🔹 `git remote -v`
+
+* Shows the **remote repositories** linked to your local repo.
+* Example output:
+
+  ```
+  origin  https://github.com/username/repo-name.git (fetch)
+  origin  https://github.com/username/repo-name.git (push)
+  ```
+
+👉 This confirms the connection is correct.
+
+---
+
+### 🔹 `git branch`
+
+* Lists all branches in your local repo.
+* The branch you are currently on will have a `*` (example: `* master`).
+  👉 By default, Git creates a branch called **master**, but GitHub now uses **main** as the default.
+
+---
+
+### 🔹 `git branch -m main`
+
+* Renames your current branch to `main`.
+  👉 This makes sure your local branch matches GitHub’s default (`main`).
+
+---
+
+### 🔹 `git push origin main`
+
+* Uploads (pushes) your commits from your **local main branch** to the **remote origin/main branch** (on GitHub).
+  👉 This is how your code actually gets uploaded to GitHub.
+
+---
+
+### 🔹 `git push -u origin main`
+
+* Same as above, but with an extra setting: it tells Git to **remember** that your local `main` is connected to `origin/main`.
+* After this, you can just type:
+
+  ```bash
+  git push
+  ```
+
+  instead of always writing `git push origin main`.
+
+---
+
+## ✅ Full Workflow Example
+
+```bash
+git remote add origin https://github.com/username/repo-name.git   # connect to GitHub
+git remote -v                                                     # check connection
+git branch                                                        # check branches
+git branch -m main                                                # rename branch to main
+git push origin main                                              # push code to GitHub
+git push -u origin main                                           # set tracking branch for future pushes
+```
+
+---
+ 
+  ## 🔹 `git branch`
+
+* **Without any options** → it simply **lists all branches** in your local repository.
+
+* Example:
+
+  ```bash
+  git branch
+  ```
+
+  Output:
+
+  ```
+  * main
+    feature1
+    bugfix
+  ```
+
+  👉 Here `* main` means you are currently on the `main` branch.
+
+* **With a name** → it **creates a new branch**.
+
+  ```bash
+  git branch feature1
+  ```
+
+  👉 This makes a new branch called `feature1` (but you’re still on your current branch until you `git checkout feature1` or `git switch feature1`).
+
+---
+
+## 🔹 `git branch -m`
+
+* `-m` means **move/rename branch**.
+* Example:
+
+  ```bash
+  git branch -m main
+  ```
+
+  👉 Renames the current branch to `main`.
+* Or, to rename a specific branch:
+
+  ```bash
+  git branch -m oldName newName
+  ```
+
+  👉 This renames `oldName` branch into `newName`.
+
+---
+
+## ✅ Simple Difference
+
+* `git branch` → **see or create branches**.
+* `git branch -m` → **rename a branch**.
+
+---
+
+⚡ Example Workflow:
+
+```bash
+git branch              # shows all branches
+git branch feature1     # creates a branch
+git branch -m main      # renames current branch to main
+```
+
+ 
+ Let’s add **`git checkout`** and **`git checkout -b`** to your notes.
+
+---
+
+## 🔹 `git checkout <branch-name>`
+
+* Used to **switch to another branch**.
+* Example:
+
+  ```bash
+  git checkout feature1
+  ```
+
+  👉 Moves you from your current branch (say `main`) to the `feature1` branch.
+* After this, your working directory changes to match the files in that branch.
+
+---
+
+## 🔹 `git checkout -b <branch-name>`
+
+* Used to **create a new branch AND switch to it immediately**.
+* Example:
+
+  ```bash
+  git checkout -b feature2
+  ```
+
+  👉 This does two things at once:
+
+  1. Creates a new branch called `feature2`.
+  2. Switches you to that branch.
+
+    ```bash
+  git checkout -d feature2
+  ```
+
+  👉 This does two things at once:
+
+  1. Deletes a new branch called `feature2`.
+  2. Before deletinh we need to switches to that other branch.
+
+---
+
+## ✅ Difference in Simple Words
+
+* `git checkout branchName` → Move to an **existing branch**.
+* `git checkout -b branchName` → **Create a new branch and move into it** at the same time.
+
+---
+
+⚡ Example Workflow:
+
+```bash
+git branch                  # shows available branches
+git checkout -b login-page  # create and switch to new branch "login-page"
+git branch                  # now shows main and login-page, you are on login-page
+git checkout main           # switch back to main branch
+```
+
+---
+
+👉 Small tip: Git now also has `git switch` (a newer, simpler version of checkout).
+
+* `git switch branchName` = switch branch
+* `git switch -c branchName` = create + switch branch
+
+---
+
+## 🔹 1. `git merge`
+
+* Used to **combine changes from one branch into another**.
+
+* Example workflow:
+
+  ```bash
+  git checkout main
+  git merge feature1
+  ```
+
+  👉 This brings the changes from `feature1` into `main`.
+
+* If changes don’t conflict, Git merges automatically.
+
+* If there’s a conflict (same line changed in both branches), you’ll have to resolve it manually.
+
+---
+
+## 🔹 2. `git diff`
+
+* Shows the **differences between files** (unstaged, staged, or between commits/branches).
+* Examples:
+
+  ```bash
+  git diff             # changes not staged
+  git diff --staged    # changes staged for commit
+  git diff main feature1   # differences between branches
+  ```
+
+  👉 Very useful to review what exactly was changed before committing or merging.
+
+---
+
+## 🔹 3. Pull Request (PR) – GitHub/GitLab/Bitbucket
+
+* A **Pull Request** is not a Git command; it’s a feature of GitHub (or similar).
+* Purpose: to propose merging your branch into another branch (usually `main`).
+* Example: After pushing your `feature1` branch to GitHub, you open a PR so teammates can review your code before merging it.
+
+---
+
+## 🔹 4. PR Review
+
+* Team members review your Pull Request:
+
+  * Give comments, suggest changes, or approve it.
+  * Once approved, the branch can be merged into `main`.
+    👉 This is important in collaboration to ensure **quality control**.
+
+---
+
+## 🔹 5. `git pull`
+
+* Used to **update your local branch with the latest changes from the remote repository** (GitHub).
+
+* Example:
+
+  ```bash
+  git pull origin main
+  ```
+
+  👉 This fetches the latest changes from GitHub’s `main` and merges them into your local `main`.
+
+* Shortcut: Instead of running `git fetch` + `git merge`, you can just run `git pull`.
+
+---
+
+## ✅ When to Use Each
+
+* **`git merge`** → When you want to combine changes from one local branch into another.
+* **`git diff`** → When you want to check differences before committing/merging.
+* **Pull Request (PR)** → When you push a branch to GitHub and want teammates (or yourself) to review and merge changes into `main`.
+* **PR Review** → When collaborating in a team; you check code quality, style, and correctness before merging.
+* **`git pull`** → When you want to update your local branch with the latest changes from GitHub (very common when working in teams).
+
+---
+
+⚡ Example Full Team Workflow:
+
+1. Create a branch:
+
+   ```bash
+   git checkout -b feature1
+   ```
+2. Work on it, commit changes.
+3. Push branch:
+
+   ```bash
+   git push origin feature1
+   ```
+4. Open a **Pull Request** on GitHub → teammates review.
+5. After approval, merge PR into `main`.
+6. Everyone else runs:
+
+   ```bash
+   git pull origin main
+   ```
+
+   to sync their local repo with the updated `main`.
+
+ 
+---
+
+### 🔹 What is a merge conflict?
+
+A **merge conflict** happens when Git cannot automatically decide how to combine changes from two branches because **both branches changed the same part of the same file differently**.
+
+In other words:
+
+* Git knows how to merge if the changes are in **different lines or files**.
+* But if both branches edit the **same line**, Git gets confused and asks you to fix it manually.
+
+---
+
+### 🔹 Example of a merge conflict
+
+Suppose we have a file `index.html`:
+
+```html
+<p>Hello World</p>
+```
+
+#### In **main** branch:
+
+You change it to:
+
+```html
+<p>Hello World from Main</p>
+```
+
+#### In **feature1** branch:
+
+You change it to:
+
+```html
+<p>Hello World from Feature1</p>
+```
+
+Now, when you try to merge `feature1` into `main`:
+
+```bash
+git checkout main
+git merge feature1
+```
+
+👉 Git will stop and say:
+
+```
+CONFLICT (content): Merge conflict in index.html
+```
+
+---
+
+### 🔹 How Git shows the conflict
+
+Git will mark the file like this:
+
+```html
+<<<<<<< HEAD
+<p>Hello World from Main</p>
+=======
+<p>Hello World from Feature1</p>
+>>>>>>> feature1
+```
+
+* `<<<<<<< HEAD` → your current branch (main)
+* `=======` → separator
+* `>>>>>>> feature1` → the branch you’re merging
+
+---
+
+### 🔹 How to resolve a merge conflict
+
+You must **edit the file manually** and decide what the final version should be. For example, you may choose:
+
+```html
+<p>Hello World from Main and Feature1</p>
+```
+
+After fixing, you do:
+
+```bash
+git add index.html
+git commit
+```
+
+Now the conflict is resolved ✅
+
+---
+
+### 🔹 Summary
+
+* Merge conflict happens when **two branches change the same line**.
+* Git asks **you** to decide which version (or combination) should be kept.
+* You fix the file, `git add`, and commit to complete the merge.
+
+ 
+## 🔹 1. Undo changes in a file (before commit)
+
+If you made changes to a file but didn’t commit yet:
+
+```bash
+git reset <file-name>
+```
+
+👉 This removes the file from **staging area** (so it won’t be committed), but your changes are still in the working directory.
+
+* Example:
+
+  ```bash
+  git reset index.html
+  ```
+
+  Now `index.html` is unstaged, but the content is still there.
+
+---
+
+## 🔹 2. Undo everything that is staged (but not committed)
+
+If you added multiple files with `git add`, but you want to unstage them all:
+
+```bash
+git reset
+```
+
+👉 This unstages **all files** but keeps your changes.
+
+---
+
+## 🔹 3. Undo the last commit (keep changes)
+
+```bash
+git reset HEAD~1
+```
+
+👉 This removes the last commit, but your changes stay in the working directory (so you can fix and recommit).
+
+* Example:
+  If you committed by mistake, this lets you redo it.
+
+---
+
+## 🔹 4. Undo multiple commits (keep changes)
+
+```bash
+git reset <commit-hash>
+```
+
+👉 This moves the branch pointer back to the given commit.
+
+* All commits after that will be removed, but changes remain in your working directory.
+* Example:
+
+  ```bash
+  git reset a1b2c3d
+  ```
+
+  Now HEAD points to commit `a1b2c3d`, later commits are undone but changes are still there.
+
+---
+
+## 🔹 5. Undo commits permanently (delete changes too)
+
+```bash
+git reset --hard <commit-hash>
+```
+
+👉 This resets everything (working directory, staging area, commit history) to the state of that commit.
+⚠️ **Danger:** You will lose all changes permanently.
+
+* Example:
+
+  ```bash
+  git reset --hard a1b2c3d
+  ```
+
+  Your repo is exactly like it was at commit `a1b2c3d`.
+
+---
+
+✅ **Summary**
+
+* `git reset <file>` → unstage file.
+* `git reset` → unstage all.
+* `git reset HEAD~1` → undo last commit, keep changes.
+* `git reset <hash>` → undo multiple commits, keep changes.
+* `git reset --hard <hash>` → undo and delete everything after that commit.
+
+ 
+---
+
+## 🔹 What is `git log`?
+
+`git log` shows the **history of commits** in your Git repository.
+It tells you:
+
+* Who made the commit
+* When it was made
+* The commit message
+* The commit hash (a unique ID)
+
+---
+
+## 🔹 Basic Command
+
+```bash
+git log
+```
+
+👉 Shows a list of commits in reverse chronological order (latest commit first).
+
+Example output:
+
+```
+commit 1a2b3c4d5e6f7g8h9i
+Author: Tharannum <your@email.com>
+Date:   Sat Sep 21 18:00 2025 +0530
+
+    Added button in the code
+
+commit a1b2c3d4e5f6g7h8i9j
+Author: Tharannum <your@email.com>
+Date:   Fri Sep 20 14:30 2025 +0530
+
+    Created index.html and README.md
+```
+
+---
+
+## 🔹 Useful Options
+
+1. **Show one-line summary for each commit**
+
+   ```bash
+   git log --oneline
+   ```
+
+   Example:
+
+   ```
+   1a2b3c4 Added button in the code
+   a1b2c3d Created index.html and README.md
+   ```
+
+2. **Show graphical branch history**
+
+   ```bash
+   git log --oneline --graph --all
+   ```
+
+   👉 Shows a nice tree view of all commits and branches.
+
+3. **Limit number of commits**
+
+   ```bash
+   git log -n 5
+   ```
+
+   👉 Shows only the last 5 commits.
+
+4. **Show commits by a specific author**
+
+   ```bash
+   git log --author="Tharannum"
+   ```
+
+5. **Search commit messages**
+
+   ```bash
+   git log --grep="button"
+   ```
+
+   👉 Finds commits where the message contains “button”.
+
+---
+
+✅ **Summary**:
+
+* `git log` = full commit history
+* `git log --oneline` = short & simple view
+* `git log --graph --all` = see branch history
+* `git log <options>` = filter commits by author, message, or number
+
+---
+ 
+
+## 🔹 What is a Fork?
+
+A **fork** is a copy of someone else’s repository that you create under **your own GitHub account**.
+
+👉 Think of it like:
+
+* **Clone** = making a copy on your **local computer**.
+* **Fork** = making a copy on your **GitHub account**.
+
+---
+
+## 🔹 Why do we Fork?
+
+1. To use someone else’s project as a starting point.
+2. To experiment with changes without affecting the original project.
+3. To contribute to open-source projects.
+
+---
+
+## 🔹 Typical Workflow of Forking
+
+1. **Fork the repo** on GitHub
+
+   * Go to the original repository → click **Fork** button (top-right).
+   * Now you have your own copy under your account.
+
+2. **Clone your fork** to your local computer
+
+   ```bash
+   git clone https://github.com/YourUsername/RepoName.git
+   ```
+
+3. **Make changes** in your local repo
+
+   * Create a new branch:
+
+     ```bash
+     git checkout -b feature-branch
+     ```
+   * Edit files, commit changes.
+
+4. **Push changes** to your fork
+
+   ```bash
+   git push origin feature-branch
+   ```
+
+5. **Create a Pull Request (PR)**
+
+   * Go to GitHub → Open your fork → Click **Compare & Pull Request**.
+   * This sends your changes to the **original repo** owner to review and merge.
+
+---
+
+## 🔹 Example
+
+Let’s say you want to contribute to a project called **OpenAI-Docs**:
+
+1. You fork `github.com/openai/docs` → now you have `github.com/yourname/docs`.
+2. Clone your fork and work locally.
+3. Push changes to your fork.
+4. Open a Pull Request → Original project owner decides whether to merge it.
+
+---
+
+✅ **Summary**:
+
+* **Fork** = Copy repo to your GitHub account.
+* Useful for **contributing to open-source**.
+* Steps: **Fork → Clone → Edit → Push → Pull Request**.
+
+---
+
+ 
