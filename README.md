@@ -1,2 +1,5 @@
 # repoo
-learning
+learning by revice
+
+change mode 
+ndnd

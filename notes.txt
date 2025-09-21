@@ -1,0 +1,150 @@
+Git 
+
+The git clone command is used to copy a remote repository to your local machine. It downloads all files, branches, and history.
+
+Basic usage:
+git clone <repository-url>
+
+ Example:
+ git clone https://github.com/username/repoo.git
+
+This will create a folder named repoo with all the repository contents.
+
+Here are some basic directory and listing commands used in the terminal:
+
+ls
+Lists files and folders in the current directory.
+
+cd
+Changes the current directory.
+
+ls -a
+Lists all files, including hidden files (those starting with a dot).
+
+Other useful listing commands:
+ls -l : Lists files with details (permissions, size, date, etc.)
+ls -lh : Lists files with human-readable sizes
+ls foldername : Lists contents of a specific folder
+On Windows, use dir instead of ls:
+dir 
+Hidden files can be shown with:
+dir/a 
+
+ 
+Git File States
+Overview
+Git files can exist in 4 main states:
+
+Untracked - New files that Git doesn't yet track
+Unmodified - Tracked files that haven't changed since last commit
+Modified - Tracked files that have changed since last commit
+Staged - Files marked to be included in next commit
+
+graph LR
+    A[Untracked] -->|git add| D[Staged]
+    B[Unmodified] -->|Edit file| C[Modified]
+    C -->|git add| D
+    D -->|git commit| B
+
+Git Status Command
+The git status command shows:
+
+Which branch you're on
+Files in each state:
+Untracked files (shown in red)
+Modified files (shown in red)
+Staged files (shown in green)
+Example output:
+
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   staged.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+        modified:   modified.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        untracked.txt
+    
+
+Key Points
+Use git add <file> to stage files
+Staged files are ready for commit
+git status helps track file states
+Files move between states as you work
+Unmodified files don't appear in status output
+The status command is safe to run anytime - it only shows information
+
+
+Git Add
+The git add command stages changes for commit. Think of staging as preparing your changes to be committed - like putting items in a shopping cart before checkout.
+
+# Stage a specific file
+git add filename.txt
+
+# Stage all changed files
+git add .
+
+# Stage multiple specific files
+git add file1.txt file2.txt
+
+When you add files:
+
+Files move from "untracked" or "modified" to "staged"
+Changes are marked for inclusion in the next commit
+You can stage partial changes from the same file
+Git Commit
+The git commit command creates a snapshot of your staged changes - like taking a photograph of your code at that moment.
+
+# Create a commit with a message
+
+git commit -m "Add login feature"
+
+# Stage all tracked files and commit in one step
+git commit -am "Fix typos in documentation"
+
+Key points:
+
+Commits are like save points in your project's history
+Each commit needs a message describing the changes
+Commits should be logical, atomic units of change
+Only staged changes will be included in the commit
+Workflow Example
+
+# Edit some files
+# Check status to see changes
+git status
+
+# Stage specific files
+git add src/login.js
+git add tests/login.test.js
+
+# Create a commit with these changes
+git commit -m "Implement user login functionality"
+
+Think of it as a two-step process:
+
+git add - Select what changes you want to commit
+git commit - Take a snapshot of those staged changes
+This two-step process gives you fine-grained control over what gets included in each commit.
+
+Git push 
+The git push command uploads your local commits to a remote repository (like GitHub). It updates the remote branch with your changes.
+
+Basic usage:
+git push <remote> <branch>
+
+<remote> is usually origin (the default remote name)
+<branch> is the branch you want to push (like main or master)
+Example:
+git push origin main
+
+Key points:
+
+Use after git commit to share changes with others
+You may need to enter your credentials
+If someone else pushed changes, you may need to pull first (git pull) before pushing again
